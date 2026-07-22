@@ -208,3 +208,46 @@ body {
   color: #94a3b8;
   margin-top: 2rem;
 }
+.generate-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: none;
+  background: #7c3aed;
+  color: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.generate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.proposal-box {
+  margin-top: 0.75rem;
+}
+
+.proposal-box textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  resize: vertical;
+}
+
+.copy-btn {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  background: #334155;
+  color: white;
+  cursor: pointer;
+  font-size: 0.8rem;
+}

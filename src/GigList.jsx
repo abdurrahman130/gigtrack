@@ -13,6 +13,8 @@ export default function GigList({ session }) {
   const [description, setDescription] = useState('')
   const [budget, setBudget] = useState('')
   const [deadline, setDeadline] = useState('')
+  const [proposals, setProposals] = useState({})
+  const [generatingId, setGeneratingId] = useState(null)
 
   useEffect(() => {
     fetchGigs()
@@ -81,6 +83,39 @@ export default function GigList({ session }) {
       alert('Error deleting gig: ' + error.message)
     } else {
       fetchGigs()
+    }
+  }
+
+  const handleGenerateProposal = async (gig) => {
+    if (!gig.description) {
+      alert('Add a job description to this gig first to generate a proposal.')
+      return
+    }
+
+    setGeneratingId(gig.id)
+
+    try {
+      const response = await fetch('/api/generate-proposal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jobDescription: gig.description,
+          platform: gig.platform,
+          client: gig.client,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to generate proposal')
+      }
+
+      setProposals((prev) => ({ ...prev, [gig.id]: data.proposal }))
+    } catch (err) {
+      alert('Error generating proposal: ' + err.message)
+    } finally {
+      setGeneratingId(null)
     }
   }
 
@@ -180,6 +215,34 @@ export default function GigList({ session }) {
                   </option>
                 ))}
               </select>
+              <button
+                className="generate-btn"
+                onClick={() => handleGenerateProposal(gig)}
+                disabled={generatingId === gig.id}
+              >
+                {generatingId === gig.id ? 'Generating...' : '✨ Generate Proposal'}
+              </button>
+
+              {proposals[gig.id] && (
+                <div className="proposal-box">
+                  <textarea
+                    value={proposals[gig.id]}
+                    onChange={(e) =>
+                      setProposals((prev) => ({ ...prev, [gig.id]: e.target.value }))
+                    }
+                    rows={6}
+                  />
+                  <button
+                    className="copy-btn"
+                    onClick={() => {
+                      navigator.clipboard.writeText(proposals[gig.id])
+                      alert('Copied to clipboard!')
+                    }}
+                  >
+                    Copy
+                  </button>
+                </div>
+              )}
             </div>
           ))}
         </div>
