@@ -8,7 +8,7 @@ As a computer science student building freelancing income on platforms like Upwo
 
 ## Live Demo
 
-🔗 **[https://gigtrack-1gq447i1w-abdurrahman11.vercel.app/](https://gigtrack-1gq447i1w-abdurrahman11.vercel.app/)**
+🔗 **[https://gigtrack-tan.vercel.app/](https://gigtrack-tan.vercel.app/)**
 
 
 ## Features
@@ -42,13 +42,13 @@ The generated proposal is fully editable in the UI before copying, so the user c
 ## Screenshots
 
 ### Login Page
-![Login page](screenshots/Screenshot 2026-07-22 210147.png)
+![Login page](screenshots/login.png)
 
 ### Dashboard
-![Dashboard with gigs](screenshots/Screenshot 2026-07-22 210227.png)
+![Dashboard with gigs](screenshots/dashboard.png)
 
 ### AI Proposal Generator
-![AI proposal generated](screenshots/Screenshot 2026-07-22 210257.png)
+![AI proposal generated](screenshots/proposal.png)
 
 ## How to Run This Project Locally
 
