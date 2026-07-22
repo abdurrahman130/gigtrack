@@ -41,8 +41,13 @@ The generated proposal is fully editable in the UI before copying, so the user c
 
 ## Screenshots
 
+### Login Page
 ![Login page](screenshots/Screenshot 2026-07-22 210147.png)
+
+### Dashboard
 ![Dashboard with gigs](screenshots/Screenshot 2026-07-22 210227.png)
+
+### AI Proposal Generator
 ![AI proposal generated](screenshots/Screenshot 2026-07-22 210257.png)
 
 ## How to Run This Project Locally
@@ -66,9 +71,14 @@ npm install
 ```
 
 3. Create a `.env` file in the project root with:
-VITE_SUPABASE_URL= https://krdrvyapvruyicdeksle.supabase.co
-VITE_SUPABASE_ANON_KEY= sb_publishable_1PPm0sBtHRpbh_teaogW-Q_OcAVxMJI
-GEMINI_API_KEY= GEMINI_API_KEY=your_gemini_api_key_here
+
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_publishable_key
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+Replace the placeholder values with your own credentials. Do not commit the `.env` file to GitHub.
 4. Set up the database — run this SQL in your Supabase SQL Editor:
 ```sql
 create table gigs (
@@ -94,8 +104,11 @@ create policy "Users manage own gigs" on gigs
 npm run dev
 ```
 
-6. For the AI feature to work locally, deploy to Vercel (or use `vercel dev`) with an additional environment variable:
-GEMINI_API_KEY= GEMINI_API_KEY=your_gemini_api_key_here
+6. For the AI feature to work locally, deploy to Vercel (or use `vercel dev`) with the following environment variable configured:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+```
 ## Author
 
 Abdur Rahman — BS Computer Science, UET Peshawar
