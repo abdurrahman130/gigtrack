@@ -16,35 +16,36 @@ export default async function handler(req, res) {
 - Ends with one clear, low-friction next step
 Do not invent experience the user hasn't provided. Write only the proposal text, no preamble or explanation.`
 
+  const userPrompt = `Platform: ${platform || 'N/A'}\nClient: ${client || 'N/A'}\nJob description: ${jobDescription}`
+
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-5',
-        max_tokens: 400,
-        system: systemPrompt,
-        messages: [
-          {
-            role: 'user',
-            content: `Platform: ${platform || 'N/A'}\nClient: ${client || 'N/A'}\nJob description: ${jobDescription}`,
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: {
+            parts: [{ text: systemPrompt }],
           },
-        ],
-      }),
-    })
+          contents: [
+            {
+              role: 'user',
+              parts: [{ text: userPrompt }],
+            },
+          ],
+        }),
+      }
+    )
 
     const data = await response.json()
 
     if (!response.ok) {
-      console.error('Anthropic API error:', data)
+      console.error('Gemini API error:', data)
       return res.status(500).json({ error: 'Failed to generate proposal' })
     }
 
-    const proposalText = data.content[0].text
+    const proposalText = data.candidates[0].content.parts[0].text
     return res.status(200).json({ proposal: proposalText })
   } catch (err) {
     console.error(err)
